@@ -1,0 +1,52 @@
+<html>  
+  
+<head>  
+    <TITLE>TAS</TITLE>  
+</head>  
+  
+<body>  
+
+      <table cellpadding="2" cellspacing="2" border="0" bgcolor="#dfdfdf" width="40%" align="center">
+        <thead>
+            <tr>
+                <th>NodeName</th>
+                <th width="20%">PostDate</th>
+                <th width="12%">PostStatus</th>
+            </tr>
+        </thead>
+            <tbody id="tableData"></tbody>
+        </table>
+
+        <script type="text/javascript">
+
+        function getData(){
+            console.log("Okkk");
+            const urlParams = new URLSearchParams(window.location.search);
+            const sDate = urlParams.get('sDate');
+            const eDate = urlParams.get('eDate');
+            fetch("http://localhost:8082/get_data?sDate="+sDate+"&eDate="+eDate, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then((response) => response.json()).then((data) => {
+            console.log("Data", data);
+            var k = '<tbody>'
+            for(i = 0;i < data.length; i++){
+                k+= '<tr>';
+                k+= '<td>' + data[i].NodeName + '</td>';
+                k+= '<td>' + data[i].PostDate + '</td>';
+                k+= '<td>' + data[i].PostStatus + '</td>';
+                k+= '</tr>';
+            }
+            k+='</tbody>';
+            document.getElementById('tableData').innerHTML = k;
+            window.print();
+            }).catch((error) => console.log(error))
+        }
+        getData()
+            </script>
+
+</body>  
+  
+</html>  
