@@ -2,36 +2,39 @@ var http = require('http');
 var url = require('url');  
 var fs = require('fs');  
 const oracledb = require("oracledb");
+ 
+clientOpts = { libDir: 'C:\\instantclient_21_13' };
+oracledb.initOracleClient();
 
-// oracledb.initOracleClient();
+let connection;
 
 async function connect() {
-    let connection;
 
     // Get the TNS service name from the $SVC_NAME environment variable
-    const svcName = process.env.SVC_NAME;
+    // const svcName = process.env.SVC_NAME;
 
     try {
           connection = await oracledb.getConnection({
-                user: "appuser",
-                password: "appuser",
-                connectionString: svcName,
+                user: "system",
+                password: "chemtasrla",
+                connectionString: "localhost/chem",
           });
           console.log("\nnode-oracledb driver version is " + oracledb.versionString);
           console.log("\nOracle client version is " + oracledb.oracleClientVersionString + "\n");
     } catch (err) {
+          console.log("Connection Error");
           console.error(err);
     }
 }
 
-// connect();
+connect();
 
 
 
 var server = http.createServer(async function(request, response) {  
     var path = url.parse(request.url).pathname;  
     console.log("path",url.parse(request.url))
-    switch (path) {  
+    switch (path) {   
         case '/':  
             fs.readFile(__dirname + "/form.html", function(error, data) {  
                 if (error) {  
