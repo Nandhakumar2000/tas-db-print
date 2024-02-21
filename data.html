@@ -6,8 +6,11 @@
   
 <body>  
 <style>
+    body {
+        font-family: monospace;
+        text-align: center;
+    }
     table, th, td {
-  font-family: monospace;
   border: 0.5px solid black;
   border-collapse: collapse;
   text-align: left;
@@ -21,6 +24,16 @@ th,td{
 padding: 5px;
 }
 </style>
+<div>
+    <h5 style="font-size: 25px;">SAP POST REPORT</h5>
+</div>
+<div style="display: flex; justify-content: space-between;align-items: center;">
+     <h6 id="today" style="font-size: 16px;"></h6>
+    <div style="display: flex;">
+     <h5 id="from" style="font-size: 16px;"></h5> 
+     <h5 id="to" style="font-size: 16px;"></h5>
+ </div>
+</div>
       <table cellpadding="2" cellspacing="2" border="0" bgcolor="#dfdfdf" width="100%" align="center">
         <thead>
             <tr>
@@ -44,6 +57,11 @@ padding: 5px;
             const urlParams = new URLSearchParams(window.location.search);
             const sDate = urlParams.get('sDate');
             const eDate = urlParams.get('eDate');
+            let sFDate = "From: " +  new Date(sDate).getDate() + "-" + (new Date(sDate).getMonth() + 1) + "-" + new Date(sDate).getFullYear();
+            let eFDate = "From: " +  new Date(eDate).getDate() + "-" + (new Date(eDate).getMonth() + 1) + "-" + new Date(eDate).getFullYear();
+            document.getElementById('from').innerHTML = sFDate + "&nbsp;&nbsp;";
+            document.getElementById('to').innerHTML = eFDate;
+            document.getElementById('today').innerHTML = "Print On: " +  new Date().getDate() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getFullYear() + "&nbsp;" + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds()
             fetch("http://localhost:8082/get_data?sDate="+sDate+"&eDate="+eDate, {
                 method: "GET",
                 headers: {
@@ -54,7 +72,7 @@ padding: 5px;
             var k = '<tbody>'
             for(i = 0;i < data.length; i++){
                 let date = new Date(data[i][7]);
-                // let formattedDate = date.getDate() + "-" + date.getMonth() + "-" + date.gatYear();
+                 let formattedDate = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "&nbsp;" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds()
                 k+= '<tr>';
                 k+= '<td>' + data[i][0] + '</td>';
                 k+= '<td>' + data[i][1] + '</td>';
@@ -75,5 +93,4 @@ padding: 5px;
             </script>
 
 </body>  
-  
 </html>  
