@@ -5,22 +5,62 @@
 </head>  
   
 <body>  
-
-      <table cellpadding="2" cellspacing="2" border="0" bgcolor="#dfdfdf" width="40%" align="center">
+<style>
+    table, th, td {
+  font-family: monospace;
+  border: 0.5px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  font-weight: bold;
+}
+th{
+  background: #0099FF;
+  color: #FFFFFF;
+}
+th,td{
+padding: 5px;
+}
+</style>
+      <table cellpadding="2" cellspacing="2" border="0" bgcolor="#dfdfdf" width="100%" align="center">
         <thead>
             <tr>
-                <th>NodeName</th>
-                <th width="20%">PostDate</th>
-                <th width="12%">PostStatus</th>
+                <th>Tank No</th>
+                <th>Tank Dip</th>
+                <th>Material Temp</th>
+                <th>Vapour Tanp</th>
+                <th>Pressure</th>
+                <th>Post Status</th>
+                <th>Remarks</th>
+                <th>Post Date</th>
             </tr>
         </thead>
-            <tbody id="tableData"></tbody>
+            <tbody id="tableData">
+                <tr>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                  </tr>
+                  <tr>
+                     <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                    <td>50</td>
+                    <td>Jill</td>
+                    <td>Smith</td>
+                  </tr>
+            </tbody>
         </table>
 
         <script type="text/javascript">
 
         function getData(){
-            console.log("Okkk");
             const urlParams = new URLSearchParams(window.location.search);
             const sDate = urlParams.get('sDate');
             const eDate = urlParams.get('eDate');
@@ -34,9 +74,14 @@
             var k = '<tbody>'
             for(i = 0;i < data.length; i++){
                 k+= '<tr>';
-                k+= '<td>' + data[i].NodeName + '</td>';
-                k+= '<td>' + data[i].PostDate + '</td>';
-                k+= '<td>' + data[i].PostStatus + '</td>';
+                k+= '<td>' + data[0] + '</td>';
+                k+= '<td>' + data[1] + '</td>';
+                k+= '<td>' + data[2] + '</td>';
+                k+= '<td>' + data[3] + '</td>';
+                k+= '<td>' + data[4] + '</td>';
+                k+= '<td>' + data[5] + '</td>';
+                k+= '<td>' + data[6] + '</td>';
+                k+= '<td>' + data[7] + '</td>';
                 k+= '</tr>';
             }
             k+='</tbody>';
@@ -44,7 +89,7 @@
             window.print();
             }).catch((error) => console.log(error))
         }
-        getData()
+      //  getData()
             </script>
 
 </body>  
