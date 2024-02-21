@@ -9,10 +9,6 @@ oracledb.initOracleClient();
 let connection;
 
 async function connect() {
-
-    // Get the TNS service name from the $SVC_NAME environment variable
-    // const svcName = process.env.SVC_NAME;
-
     try {
           connection = await oracledb.getConnection({
                 user: "system",
@@ -72,44 +68,47 @@ var server = http.createServer(async function(request, response) {
             console.log("queryData.sDate", queryData.sDate); 
             console.log("queryData.eDate", queryData.eDate); 
 
-            result = await connection.execute(
-                "select * from v$version",
-                [], {
-                resultSet: true,
-                outFormat: oracledb.OUT_FORMAT_OBJECT
-                }
-          );
-
-          rs = result.resultSet;
-
-          let row;
-          while ((row = await rs.getRow())) {
-                console.log(row);
-          }
-          await rs.close();
-
-
-            data =  [{
-                name: "Kapil",
-                age:  21,
-                status: "Active"
-            },
-            {
-                name: "John",
-                age:  28,
-                status: "Inactive"
-            },
-            {
-                name: "Deos",
-                age:  18,
-                status: "Active"
-            }];
-            
-            response.writeHead(200, {  
+            try {
+            const result = await connection.execute(
+                // The statement to execute
+                `SELECT *
+                 FROM tfms`,
+          
+                // The "bind value" 3 for the bind variable ":idbv"
+                 [],
+          
+                // Options argument.  Since the query only returns one
+                // row, we can optimize memory usage by reducing the default
+                // maxRows value.  For the complete list of other options see
+                // the documentation.
+                {
+                  //  maxRows: 1
+                  //, outFormat: oracledb.OUT_FORMAT_OBJECT  // query result format
+                  //, fetchArraySize: 100                    // internal buffer allocation size for tuning
+                });
+          
+              console.log("Query metadata:", result.metaData);
+              console.log("Query rows:", result.rows);
+          
+              response.writeHead(200, {  
                 'Content-Type': 'application/json'  
             });
             response.write(JSON.stringify(data));  
-            response.end();  
+            response.end(); 
+
+            } catch (err) {
+              console.error(err);
+            } finally {
+              if (connection) {
+                try {
+                  // Connections should always be released when not needed
+                  await connection.close();
+                } catch (err) {
+                  console.error(err);
+                }
+              }
+            }
+
             break;    
         default:  
             response.writeHead(404);  
