@@ -69,10 +69,7 @@ var server = http.createServer(async function(request, response) {
             console.log("queryData.eDate", queryData.eDate); 
 
             try {
-            const result = await connection.execute(
-                // The statement to execute
-                `SELECT *
-                 FROM tfms`,
+            const result = await connection.execute(`SELECT TankNo, TankDip, MTemp, VTemp, Pressure, PostStatus, PostMsg, PostDate FROM TFMSPOSTDATA`,
           
                 // The "bind value" 3 for the bind variable ":idbv"
                  [],
@@ -93,7 +90,7 @@ var server = http.createServer(async function(request, response) {
               response.writeHead(200, {  
                 'Content-Type': 'application/json'  
             });
-            response.write(JSON.stringify(data));  
+            response.write(JSON.stringify(result.rows));  
             response.end(); 
 
             } catch (err) {
