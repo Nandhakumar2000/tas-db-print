@@ -35,26 +35,6 @@ padding: 5px;
             </tr>
         </thead>
             <tbody id="tableData">
-                <tr>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                  </tr>
-                  <tr>
-                     <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                    <td>50</td>
-                    <td>Jill</td>
-                    <td>Smith</td>
-                  </tr>
             </tbody>
         </table>
 
@@ -73,15 +53,17 @@ padding: 5px;
             console.log("Data", data);
             var k = '<tbody>'
             for(i = 0;i < data.length; i++){
+                let date = new Date(data[i][7]);
+                // let formattedDate = date.getDate() + "-" + date.getMonth() + "-" + date.gatYear();
                 k+= '<tr>';
-                k+= '<td>' + data[0] + '</td>';
-                k+= '<td>' + data[1] + '</td>';
-                k+= '<td>' + data[2] + '</td>';
-                k+= '<td>' + data[3] + '</td>';
-                k+= '<td>' + data[4] + '</td>';
-                k+= '<td>' + data[5] + '</td>';
-                k+= '<td>' + data[6] + '</td>';
-                k+= '<td>' + data[7] + '</td>';
+                k+= '<td>' + data[i][0] + '</td>';
+                k+= '<td>' + data[i][1] + '</td>';
+                k+= '<td>' + data[i][2] + '</td>';
+                k+= '<td>' + data[i][3] + '</td>';
+                k+= '<td>' + data[i][4] + '</td>';
+                k+= '<td>' + data[i][5] + '</td>';
+                k+= '<td>' + data[i][6] + '</td>';
+                k+= '<td>' + date + '</td>';
                 k+= '</tr>';
             }
             k+='</tbody>';
@@ -89,7 +71,7 @@ padding: 5px;
             window.print();
             }).catch((error) => console.log(error))
         }
-      //  getData()
+        getData()
             </script>
 
 </body>  
